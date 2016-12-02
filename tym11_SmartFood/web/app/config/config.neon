@@ -22,9 +22,15 @@ services:
 	router: App\RouterFactory::createRouter
 	authenticator: \App\Model\UserAuthenticator
 	authorizator: App\Model\UserAuthorizator
-	userManager: App\Model\UserManager
+	userManager:
+		factory: App\Model\UserManager
+		setup:
+			- setInjections
 	imageStorage: App\Model\ImageStorage(%wwwDir%/uploads)
 	corePagesManager: App\Model\CorePagesManager
+	creditLogManager: App\Model\CreditLogManager
+	productManager: App\Model\ProductManager
+	automatManager: App\Model\AutomatManager
 
 	leftSideNavigationFactory: App\CoreModule\Controls\ILeftsideNavigationFactory
 

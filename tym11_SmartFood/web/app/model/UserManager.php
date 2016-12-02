@@ -26,7 +26,15 @@ class UserManager extends BaseManager
 	const DEFAULT_PASSWORD_LENGTH = 5,
 		SALT_LENGTH = 16;
 
-	protected $customersManager;
+	/**
+	 * @var Model pro logování
+	 */
+	protected $creditLogManager;
+
+	public function setInjections(CreditLogManager $creditLogManager)
+	{
+		$this->creditLogManager = $creditLogManager;
+	}
 
 	public function register($values)
 	{
@@ -318,7 +326,9 @@ class UserManager extends BaseManager
 	public function addCredit($id, $credit)
 	{
 		$lastValue = $this->getCreditByUserId($id);
-		$this->setCreditByUserId($id, $lastValue + $credit);
+		$newValue = $lastValue + $credit;
+		$this->setCreditByUserId($id, $newValue);
+		$this->creditLogManager->logSomething("Kredity přidány (+$credit)", $newValue, $id);
 	}
 
 }

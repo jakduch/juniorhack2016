@@ -12,6 +12,7 @@ class UserAuthorizator extends Permission
 		$this->addRole("Administrátor", "Uživatel");
 
 		$this->addResource("Homepage");
+		$this->addResource("Buying");
 		$this->addResource("Credit");
 		$this->addResource("Settings");
 

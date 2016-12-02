@@ -8,16 +8,25 @@ class SettingsPresenter extends BasePresenter
 {
 	const MSG_REQ = "Toto pole je povinné";
 	/** Seznam modelů */
-	protected $managerList = array('user');
+	protected $managerList = array('user', 'product', 'automat');
 
 	/** Instance pro práci s modelem uživatelů */
 	protected $userManager;
 
-	/** Instance pro práci s modelem zákazníků*/
-	protected $customersManager;
+	/** Instance pro práci s modelem produktů*/
+	protected $productManager;
+
+	/** Instance pro práci s modelem automatů*/
+	protected $automatManager;
 
 	/** Instance upravovaného uživatele */
 	protected $editedUser;
+
+	/** Instance upravovaného produktu */
+	protected $editedProduct;
+
+	/** Instance upravovaného automatu */
+	protected $editedAutomat;
 
 	public function renderUsers()
 	{
@@ -246,5 +255,141 @@ class SettingsPresenter extends BasePresenter
 		}
 		$this->userManager->generateNewPassword($id);
 		$this->flashMessage("Heslo bylo vyresetováno, email odeslán!");
+	}
+
+	public function actionProducts()
+	{
+		$this->template->products = $this->productManager->getAll();
+	}
+
+	protected function createComponentProductCreateForm()
+	{
+		$form = new Form();
+		$form->getElementPrototype()->addAttributes(array('class' => 'form-horizontal'));
+
+		$form->addText('name', "Název produktu: ")->setRequired(self::MSG_REQ);
+		$form['name']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['name']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->addText('price', "Cena za kus (kč): ")->setRequired(self::MSG_REQ)->setType('number');
+		$form['price']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['price']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->onSuccess[] = [$this, 'productCreateFormSucceeded'];
+		$form->addSubmit('submit', "Vytvořit produkt");
+
+		return $form;
+	}
+
+	public function productCreateFormSucceeded($form, $values)
+	{
+		$this->productManager->addProduct($values);
+		$this->flashMessage("Produkt byl úspěšně přidán!");
+		$this->redirect("Settings:products");
+	}
+
+	public function actionProductEdit($id)
+	{
+		$this->editedProduct = $this->productManager->getProductById($id);
+	}
+
+	protected function createComponentProductEditForm()
+	{
+		$form = new Form();
+		$form->getElementPrototype()->addAttributes(array('class' => 'form-horizontal'));
+
+		$form->addText('name', "Název produktu: ")->setRequired(self::MSG_REQ);
+		$form['name']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['name']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->addText('price', "Cena za kus (kč): ")->setRequired(self::MSG_REQ)->setType('number');
+		$form['price']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['price']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->addHidden('id');
+
+		$form->setDefaults($this->editedProduct);
+
+		$form->onSuccess[] = [$this, 'productEditFormSucceeded'];
+		$form->addSubmit('submit', "Upravit produkt");
+
+		return $form;
+	}
+
+	public function productEditFormSucceeded($form, $values)
+	{
+		$this->productManager->updateProduct($values);
+		$this->flashMessage("Produkt byl upraven!");
+		$this->redirect("Settings:products");
+	}
+
+	public function actionEditAutomat($id)
+	{
+		$this->editedAutomat = $this->automatManager->getAutomatById($id);
+	}
+
+	public function actionAutomats()
+	{
+		$this->template->automats = $this->automatManager->getAll();
+	}
+
+	protected function createComponentAutomatCreateForm()
+	{
+		$form = new Form();
+		$form->getElementPrototype()->addAttributes(array('class' => 'form-horizontal'));
+
+		$form->addText('name', "Název automatu: ")->setRequired(self::MSG_REQ);
+		$form['name']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['name']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->addText('locality', "Lokalita: ")->setRequired(self::MSG_REQ);
+		$form['locality']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['locality']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->onSuccess[] = [$this, 'automatCreateFormSucceeded'];
+		$form->addSubmit('submit', "Vytvořit automat");
+
+		return $form;
+	}
+
+	public function automatCreateFormSucceeded($form, $values)
+	{
+		$this->automatManager->addAutomat($values);
+		$this->flashMessage("Automat byl vytvořen!");
+		$this->redirect("Settings:automats");
+	}
+
+	protected function createComponentAutomatEditForm()
+	{
+		$form = new Form();
+		$form->getElementPrototype()->addAttributes(array('class' => 'form-horizontal'));
+
+		$form->addText('name', "Název automatu: ")->setRequired(self::MSG_REQ);
+		$form['name']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['name']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->addText('locality', "Lokalita: ")->setRequired(self::MSG_REQ);
+		$form['locality']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
+		$form['locality']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
+
+		$form->onSuccess[] = [$this, 'automatEditFormSucceeded'];
+		$form->addHidden('id');
+		$form->addSubmit('submit', "Vytvořit automat");
+
+		$form->setDefaults($this->editedAutomat);
+
+		return $form;
+	}
+
+	public function automatEditFormSucceeded($form, $values)
+	{
+		$this->automatManager->updateAutomat($values);
+		$this->flashMessage("Automat byl vytvořen!");
+		$this->redirect("Settings:automats");
+	}
+
+	public function actionAutomatEdit($id)
+	{
+		$this->editedAutomat = $this->automatManager->getAutomatById($id);
 	}
 }

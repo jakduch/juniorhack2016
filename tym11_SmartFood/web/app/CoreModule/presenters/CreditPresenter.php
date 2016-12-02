@@ -31,7 +31,8 @@ class CreditPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addText('credit_count', "Počet kreditů: ");
+		$form->addText('credit_count', "Počet kreditů: ")
+			->setType('number');
 		$form['credit_count']->getControlPrototype()->addAttributes(array('class' => 'form-control'));
 		$form['credit_count']->getLabelPrototype()->addAttributes(array('class' => 'control-label col-sm-offset-1 col-sm-2 col-xs-12'));
 

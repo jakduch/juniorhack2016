@@ -1,0 +1,62 @@
+{block content}
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Vytvořit nového uživatele</h2>
+			<div class="clearfix"></div>
+		</div>
+
+		{form userCreateForm}
+			<ul class="errors" n:if="$form->hasErrors()">
+				<li n:foreach="$form->errors as $error">{$error}</li>
+			</ul>
+			<div class="form-group">
+				{label firstname /}
+				<div class="col-sm-4">
+					{input firstname}
+				</div>
+			</div>
+			<div class="form-group">
+				{label lastname /}
+				<div class="col-sm-4">
+					{input lastname}
+				</div>
+			</div>
+			<div class="form-group">
+				{label email /}
+				<div class="col-sm-4">
+					{input email}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{label group_id /}
+				<div class="col-sm-4">
+					{input group_id}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{label image /}
+				<div class="col-sm-7">
+					{input image}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					{input id}
+					{input submit}
+				</div>
+			</div>
+		{/form}
+	</div>
+
+
+{/block}
+{block scripts}
+	{include parent}
+{/block}
+
+{block head}
+{/block}

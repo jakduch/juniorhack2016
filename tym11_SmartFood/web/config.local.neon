@@ -1,0 +1,9 @@
+parameters:
+
+database:
+	dsn: 'mysql:host=wm125.wedos.net;dbname=d138303_guhring'
+	user: 'a138303_guhring'
+	password: 'SBuR2X5S'
+	options:
+		lazy: yes
+

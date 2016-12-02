@@ -1,0 +1,4 @@
+Smart_Food.MainActivity, Smart Food;md50f1fd91016041328061cc616d06f2659.MainActivity
+Smart_Food.MainActivity, Smart Food, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md50f1fd91016041328061cc616d06f2659.MainActivity
+Smart_Food.MainActivity;md50f1fd91016041328061cc616d06f2659.MainActivity
+smart_food.MainActivity;md50f1fd91016041328061cc616d06f2659.MainActivity

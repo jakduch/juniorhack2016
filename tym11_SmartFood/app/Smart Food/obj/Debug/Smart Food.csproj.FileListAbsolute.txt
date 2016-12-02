@@ -1,0 +1,38 @@
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Smart Food.dll
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Smart Food.pdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Smart_Food.Smart_Food.apk
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Smart_Food.Smart_Food-Signed.apk
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\Smart Food.csprojResolveAssemblyReference.cache
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\Smart Food.dll
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\Smart Food.pdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\bin\Smart_Food.Smart_Food.apk
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\res\layout\main.xml
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\res\values\strings.xml
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\res\drawable\icon.png
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\R.cs.flag
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\uploadflags.txt
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Smart Food.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Java.Interop.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\Mono.Android.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\mscorlib.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.ComponentModel.Composition.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.Core.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.Net.Http.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.Runtime.Serialization.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.ServiceModel.Internals.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.Xml.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\bin\Debug\System.Xml.Linq.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\Java.Interop.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\Mono.Android.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\mscorlib.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\Smart Food.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.ComponentModel.Composition.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.Core.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.Net.Http.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.Runtime.Serialization.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.ServiceModel.Internals.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.Xml.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\android\assets\System.Xml.Linq.dll.mdb
+c:\users\dejv\documents\visual studio 2015\Projects\Smart Food\Smart Food\obj\Debug\Smart Food.dll.mdb

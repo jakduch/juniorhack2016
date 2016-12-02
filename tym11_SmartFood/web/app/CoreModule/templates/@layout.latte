@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Administrace | Automat</title>
+	<!-- Bootstrap core CSS -->
+	<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{$basePath}/fonts/css/font-awesome.min.css" rel="stylesheet">
+	<link href="{$basePath}/css/icheck/flat/green.css" rel="stylesheet">
+	<!-- Custom styling plus plugins -->
+	<link href="{$basePath}/css/custom.css" rel="stylesheet">
+	<link rel="stylesheet" href="{$basePath}/css/style_popup.css">
+	<link rel="stylesheet" href="{$basePath}/css/datatables/css/responsive.css">
+
+	{block head}
+
+	{/block}
+</head>
+
+<body class="nav-md">
+<div class="container body">
+	<div class="main_container">
+		<div class="col-md-3 left_col">
+			<div class="left_col scroll-view">
+				<div class="navbar nav_title" style="border: 0;">
+					<a n:href="Homepage:default" class="site_title img-responsive">
+						<img class="nav-image-md img-responsive" src="{$basePath}/img/logo-automat.png">
+						<img class="nav-image-sm img-responsive" src="{$basePath}/img/logo-gcloud-small.png">
+					</a>
+				</div>
+				<div class="clearfix"></div>
+
+				{control leftsideNavigation}
+			</div>
+		</div>
+
+		{include topNavigation.latte}
+
+		<div class="right_col" role="main">
+			<div class="row">
+
+				{include content}
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+{block scripts}
+	<script src="{$basePath}/js/jquery.min.js"></script>
+	<script src="{$basePath}/js/bootstrap.min.js"></script>
+	<script src="{$basePath}/js/custom.js"></script>
+	<script src="{$basePath}/js/myJs.js"></script>
+	<script src="{$basePath}/js/netteForms.min.js"></script>
+	<script src="{$basePath}/js/popup.js"></script>
+	<script src="{$basePath}/js/nette-ajax.js"></script>
+	{foreach $flashes as $flash}
+		<script>showFlashMessage({$flash->message})</script>
+	{/foreach}
+	<script>
+		$("a[data-confirm], button[data-confirm], input[data-confirm]").click(function(e){
+			if(!confirm($(this).attr('data-confirm')))
+			{
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				return false;
+			}
+		});
+
+	</script>
+
+{/block}
+
+</html>

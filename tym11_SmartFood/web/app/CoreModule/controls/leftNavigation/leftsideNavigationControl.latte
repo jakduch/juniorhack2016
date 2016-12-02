@@ -1,0 +1,39 @@
+<!-- menu prile quick info -->
+<div class="profile">
+	<div class="profile_pic">
+		<img src="{$basePath}/uploads/{$user->getIdentity()->user_image_name}" alt="..." class="img-circle profile_img">
+	</div>
+	<div class="profile_info">
+		<span>Vítejte,</span>
+		<h2>{$user->getIdentity()->firstname} {$user->getIdentity()->lastname}</h2>
+	</div>
+</div>
+<!-- /menu prile quick info -->
+<br/>
+<!-- sidebar menu -->
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+	<div class="menu_section">
+		<h3>Menu</h3>
+		<ul class="nav side-menu">
+			{foreach $headings as $heading}
+				{if $user->isAllowed($heading->presenter, 'headings')}
+					<li><a><i class="fa {$heading->icon}"></i> {$heading->text} <span class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu" style="display: none">
+							{var $section = clone $categories}
+							{foreach $section->where('presenter', $heading->presenter) as $category}
+									{if $user->isAllowed($category->presenter, $category->action)}
+										<li><a href="{plink {$category->presenter}:{$category->action}}">{$category->text}</a>
+										</li>
+									{/if}
+							{/foreach}
+						</ul>
+					</li>
+				{/if}
+			{/foreach}
+			<li><a href="{plink refresh!}"><i class="fa fa-refresh"></i> Znovunačtení přihlášení</a>
+				<ul class="nav child_menu" style="display: none">
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>

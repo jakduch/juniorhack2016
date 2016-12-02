@@ -1,0 +1,2 @@
+android.app.Application
+Smart_Food.Smart_Food

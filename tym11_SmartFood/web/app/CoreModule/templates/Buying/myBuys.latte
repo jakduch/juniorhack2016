@@ -1,0 +1,47 @@
+{block content}
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Historie nákupů</h2>
+			<ul class="nav navbar-right panel_toolbox">
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+
+		<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+			<thead>
+			<tr>
+				<th>Datum</th>
+				<th>Cena</th>
+				<th>Automat</th>
+				<th>Vyzvednuto</th>
+			</tr>
+			</thead>
+			<tbody>
+			{if count($orders) > 0}
+			{foreach $orders as $o}
+				<tr>
+					<td><span style="display:none;">{$o->date}</span>{$o->date|date: 'd.m.Y H:i'}</td>
+					<td>{$o->total_price}</td>
+					<td>{$o->automat}</td>
+					{if $o->getted == 1}
+						<td><img class="icon-status" src="{$basePath}/img/icon_check.png"</td>
+					{else}
+						<td><img class="icon-status" src="{$basePath}/img/icon_cross.png"</td>
+					{/if}
+
+				</tr>
+			{/foreach}
+			{/if}
+			</tbody>
+		</table>
+	</div>
+
+
+{/block}
+{block scripts}
+	{include parent}
+{/block}
+
+{block head}
+{/block}

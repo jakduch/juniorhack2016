@@ -18,6 +18,12 @@ class CreditLogManager extends BaseManager
 		COLUMN_TOTAL = "total",
 		COLUMN_USER_ID = "user_id";
 
+	/**
+	 * Zaloguje pohyb kreditů
+	 * @param $description - text (do závorky změna stavu kreditů)
+	 * @param $total - celkový počet kreditů po operaci
+	 * @param $userId - ID uživatele (primary key)
+	 */
 	public function logSomething($description, $total, $userId)
 	{
 		$data[self::COLUMN_DATE] = new \DateTime();
@@ -28,6 +34,11 @@ class CreditLogManager extends BaseManager
 			->insert($data);
 	}
 
+	/**
+	 * Získá logy uživatelových kreditů seřazených dle času
+	 * @param $id - ID uživatele
+	 * @return array|\Nette\Database\Table\IRow[]
+	 */
 	public function getLogsOfUser($id)
 	{
 		return $this->database->table(self::TABLE_NAME)

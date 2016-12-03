@@ -22,13 +22,15 @@
 		<table border="1px solid" class="buy-table">
 			<tr>
 				<th>Název</th>
+				<th>K dispozici</th>
 				<th>Cena za kus</th>
 				<th>Počet</th>
 				<th>Součet</th>
 			</tr>
 		<div n:formContainer="items_container" n:inner-foreach="$formContainer->controls AS $name => $field">
-			<tr>
+			<tr id="row-{$name}">
 				<td>{label $name /}</td>
+				<td><span class="amount-span" id="{$name}-amount">-</span> Ks</td>
 				<td><span id="{$name}-price_ks">{$prices[$name]}</span> Kč</td>
 				<td>{input $name}</td>
 				<td><span class="priceForItem" id="{$name}-price_item">0</span> Kč</td>
@@ -37,10 +39,12 @@
 			<tr>
 				<th>Celkem</th>
 				<th>-</th>
+				<th>-</th>
 				<th><span id="total-ks">0</span> ks</th>
 				<th><span id="total-price">0</span> Kč</th>
 			</tr>
 		</table>
+		<hr />
 
 		<div class="form-group">
 			<div class="col-sm-10">
@@ -57,8 +61,71 @@
 	{block scripts}
 		{include parent}
 		<script>
+			//ID aktuálně vybraného automatu GLOBAL
+			automat_id = null;
+			//bolean, jestli je možné formulář odeslán GLOBAL
+			canSend = true;
+		</script>
+		<script>
+			//vynuluje summary - celk. cenou, kusy apod.
+			function vynuluj()
+			{
+				$(".priceForItem").text(0)
+				$("#total-ks").text(0)
+				$("#total-price").text(0)
+			}
+		</script>
+		<script>
+			//Pokud formulář nemá být odeslán, neodesílej ho
+			$("form").submit(function(){
+				if(canSend == false)
+				{
+					alert("Objednávka nemůže být odeslána!");
+					return false;
+				}
+				else
+						return true;
+			});
+		</script>
+		<script>
+			//Zjisti stav zboží
+			function checkAmounts(automat_id)
+			{
+				//Ajax volající handler getAmounts v Buying presenteru, ochrana před editací během ajaxu
+				$("input").attr('readonly', '');
+					$.nette.ajax({
+						url: {link getAmounts!},
+						type: 'GET',
+						data:{
+							automatId: automat_id
+						},
+						success: function(payload){
+							var data = payload.data;
+							//pro každý zboží nahraj změny
+							$.each(data, function(index, value){
+								$("#" + index + "-amount").text(value);
+							})
+							$("input[type=number]").val(0);
+							//konec ochrany před editací během ajaxu
+							$("input").removeAttr('readonly');
+						}
+					});
+				vynuluj();
+			}
+		</script>
+		<script>
+			//při změně automatu kontroluj zboží a změň ID aktuálně vybraného automatu
+			$("select").change(function(){
+				automat_id = $("select[name=automat] option:selected").val();
+				checkAmounts(automat_id);
+			});
+		</script>
+		<script>
+			//funkce se volá při refreshy (jakoby onload)
 			function prepocitej()
 			{
+				//aktualizuj ID akt. automatu
+				automat_id = $("select[name=automat] option:selected").val();
 				$("input[type=number]").each(function() {
 					var id = $(this).attr('data-id');
 					var price_ks = ($("#" + id + "-price_ks").text())
@@ -73,15 +140,51 @@
 
 					var priceTotal = 0;
 					$(".priceForItem").each(function(){
-						console.log(this);
 						priceTotal += Number($(this).text());
 					});
 					$("#total-price").text(priceTotal);
+				});
+				checkAmounts(automat_id);
+
+			}
+
+			//kontrola zda si člověk neobjednává víc zboží než je aktuálně k dispozci
+			function kontroluj()
+			{
+				automat_id = $("select[name=automat] option:selected").val();
+				$("input[type=number]").each(function() {
+					var id = $(this).attr('data-id');
+					var price_ks = ($("#" + id + "-price_ks").text())
+					var ks = $(this).val();
+
+					var count = 0;
+					$(".buy-table input[type=number]").each(function(){
+						count += Number($(this).val());
+					});
+					var amount = Number($("#"+id+"-amount").text());
+					if(amount >= ks)
+					{
+						$("#row-"+id).removeClass('blocked');
+					}
+					else
+					{
+						$("#row-"+id).addClass('blocked');
+					}
+
+					if($(".blocked").length > 0 || count == 0)
+					{
+						canSend = false;
+					}
+					else
+					{
+						canSend = true;
+					}
 				});
 
 			}
 		</script>
 		<script>
+			//při změně množství
 			$("input[type=number]").change(function(e){
 				var id = $(this).attr('data-id');
 				var price_ks = ($("#" + id + "-price_ks").text())
@@ -96,12 +199,41 @@
 
 				var priceTotal = 0;
 				$(".priceForItem").each(function(){
-					console.log(this);
 					priceTotal += Number($(this).text());
 				});
 				$("#total-price").text(priceTotal);
+
+				var amount = Number($("#"+id+"-amount").text());
+
+				if(amount >= ks)
+				{
+					$("#row-"+id).removeClass('blocked');
+				}
+				else
+				{
+					$("#row-"+id).addClass('blocked');
+				}
+
+				if($(".blocked").length > 0 || count == 0)
+				{
+					canSend = false;
+				}
+				else
+				{
+					canSend = true;
+				}
+
 			});
 
+		</script>
+
+		<script>
+
+			//Kontrola závislostí při spuštěném ajaxu
+			$(document).on({
+				ajaxStart: function() { $(".amount-span").text("-");    },
+				ajaxStop: function() { kontroluj(); }
+			});
 			prepocitej();
 		</script>
 	{/block}

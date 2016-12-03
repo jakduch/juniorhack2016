@@ -20,6 +20,9 @@ class CreditPresenter extends BasePresenter
 
 	protected $userManager;
 
+	/**
+	 * @var Model pro práci s logem kreditů
+	 */
 	protected $creditLogManager;
 
 	public function actionBuyCredit()
@@ -49,6 +52,7 @@ class CreditPresenter extends BasePresenter
 
 	public function creditAddFormSucceeded($form, $values)
 	{
+		//Přidání kreditu
 		$this->userManager->addCredit($values->id, $values->credit_count);
 		$this->flashMessage("Kredity byli přidány!");
 		$this->redirect("Credit:buyCredit");
@@ -56,6 +60,7 @@ class CreditPresenter extends BasePresenter
 
 	public function actionCreditHistory()
 	{
+		//Zobrzaení historie pohybu kreditů
 		$this->template->creditHistory = $this->creditLogManager->getLogsOfUser($this->user->id);
 
 	}

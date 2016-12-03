@@ -5572,3 +5572,8 @@ th input {
 {
 	padding: 5px !important;
 }
+
+.blocked
+{
+	color: red;
+}

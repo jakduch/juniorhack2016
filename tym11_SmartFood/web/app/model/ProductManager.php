@@ -15,12 +15,20 @@ class ProductManager extends BaseManager
 		COLUMN_NAME = "name",
 		COLUMN_PRICE = "price";
 
+	/**
+	 * Seznam všech produktů
+	 * @return array|\Nette\Database\Table\IRow[]
+	 */
 	public function getAll()
 	{
 		return $this->database->table(self::TABLE_NAME)
 			->fetchAll();
 	}
 
+	/**
+	 * Přidání produktu
+	 * @param $values
+	 */
 	public function addProduct($values)
 	{
 		$data[self::COLUMN_NAME] = $values->name;
@@ -30,6 +38,10 @@ class ProductManager extends BaseManager
 			->insert($data);
 	}
 
+	/**
+	 * Aktualizace produktu
+	 * @param $values
+	 */
 	public function updateProduct($values)
 	{
 		$data[self::COLUMN_PRICE] = $values->price;
@@ -40,6 +52,11 @@ class ProductManager extends BaseManager
 			->update($data);
 	}
 
+	/**
+	 * Získání produktu dle ID
+	 * @param $id
+	 * @return bool|mixed|\Nette\Database\Row|\Nette\Database\Table\IRow
+	 */
 	public function getProductById($id)
 	{
 		return $this->database->table(self::TABLE_NAME)
@@ -47,6 +64,10 @@ class ProductManager extends BaseManager
 			->fetch();
 	}
 
+	/**
+	 * Záskání produktů ve formátu pro selectbox $key => hodnota
+	 * @return array
+	 */
 	public function getForArray()
 	{
 		$result = $this->database->table(self::TABLE_NAME)
@@ -61,6 +82,10 @@ class ProductManager extends BaseManager
 		return $return;
 	}
 
+	/**
+	 * Záskání cen ve formátu $key => cena
+	 * @return array
+	 */
 	public function getPrices()
 	{
 		$result = $this->database->table(self::TABLE_NAME)

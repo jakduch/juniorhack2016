@@ -260,6 +260,10 @@ class UserManager extends BaseManager
 			->delete();
 	}
 
+	/**
+	 * Získání uživatelů ve formátu pro selextbox
+	 * @return array
+	 */
 	public function getAllUsersAsArray()
 	{
 		$result = $this->database->table(self::TABLE_NAME)
@@ -272,6 +276,11 @@ class UserManager extends BaseManager
 		return $users;
 	}
 
+	/**
+	 * Změna avataru
+	 * @param $values
+	 * @param $userId
+	 */
 	public function changeAvatar($values, $userId)
 	{
 
@@ -307,6 +316,11 @@ class UserManager extends BaseManager
 			->{self::COLUMN_GROUP_NAME};
 	}
 
+	/**
+	 * Získání kreditu podle user Id
+	 * @param $id - uživatelské id (primary key)
+	 * @return mixed
+	 */
 	public function getCreditByUserId($id)
 	{
 		$result = $this->database->table(self::TABLE_NAME)
@@ -316,6 +330,11 @@ class UserManager extends BaseManager
 		return $result->credit;
 	}
 
+	/**
+	 * Nastavení kreditu uživatele
+	 * @param $id
+	 * @param $newValue
+	 */
 	public function setCreditByUserId($id, $newValue)
 	{
 		$this->database->table(self::TABLE_NAME)
@@ -323,6 +342,11 @@ class UserManager extends BaseManager
 			->update(array(self::COLUMN_CREDIT => $newValue));
 	}
 
+	/**
+	 * Přidání kreditu
+	 * @param $id
+	 * @param $credit změna (např. +80,-66)
+	 */
 	public function addCredit($id, $credit)
 	{
 		$lastValue = $this->getCreditByUserId($id);
@@ -331,6 +355,11 @@ class UserManager extends BaseManager
 		$this->creditLogManager->logSomething("Kredity přidány (+$credit)", $newValue, $id);
 	}
 
+	/**
+	 * Odstranění kreditu 
+	 * @param $id
+	 * @param $credit - změna (např. +80,-66)
+	 */
 	public function removeCredit($id, $credit)
 	{
 		$lastValue = $this->getCreditByUserId($id);

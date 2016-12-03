@@ -17,6 +17,13 @@ class OrdersItemsManager extends BaseManager
 		COLUMN_AMOUNT = "amount",
 		COLUMN_PRICE = "price";
 
+	/**
+	 * Vložení zboží spojeného s objednávkou (N:N relace)
+	 * @param $order_id - ID objednávky
+	 * @param $product_id - id produktu
+	 * @param $amount - množství
+	 * @param $price - cena
+	 */
 	public function insert($order_id, $product_id, $amount, $price)
 	{
 		$data[self::COLUMN_ORDER_ID] = $order_id;

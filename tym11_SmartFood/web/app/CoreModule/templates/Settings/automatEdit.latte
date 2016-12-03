@@ -33,6 +33,31 @@
 				</div>
 			</div>
 		{/form}
+		<hr />
+
+		{form updateStorageForm}
+			<h2>Položky v automatu</h2>
+			<table border="1px solid" class="buy-table">
+				<tr>
+					<th>Název zboží</th>
+					<th>Počet kusů</th>
+				</tr>
+				<div n:formContainer="items_container" n:inner-foreach="$formContainer->controls AS $name => $field">
+					<tr>
+						<td>{label $name /}</td>
+						<td>{input $name}</td>
+					</tr>
+				</div>
+			</table>
+			<hr />
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					{input id}
+					{input submit}
+				</div>
+			</div>
+		{/form}
 	</div>
 
 

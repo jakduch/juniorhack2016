@@ -8,7 +8,7 @@ class SettingsPresenter extends BasePresenter
 {
 	const MSG_REQ = "Toto pole je povinné";
 	/** Seznam modelů */
-	protected $managerList = array('user', 'product', 'automat');
+	protected $managerList = array('user', 'product', 'automat', 'itemStorage');
 
 	/** Instance pro práci s modelem uživatelů */
 	protected $userManager;
@@ -19,6 +19,9 @@ class SettingsPresenter extends BasePresenter
 	/** Instance pro práci s modelem automatů*/
 	protected $automatManager;
 
+	/** Instance pro práci s modelem ItemStorage*/
+	protected $itemStorageManager;
+
 	/** Instance upravovaného uživatele */
 	protected $editedUser;
 
@@ -27,6 +30,9 @@ class SettingsPresenter extends BasePresenter
 
 	/** Instance upravovaného automatu */
 	protected $editedAutomat;
+
+	/** @var  Seznam produktů */
+	protected $productList;
 
 	public function renderUsers()
 	{
@@ -77,14 +83,12 @@ class SettingsPresenter extends BasePresenter
 	 */
 	public function userCreateFormSucceeded($form, $values)
 	{
-		if($this->userManager->getUserByEmail($values->email) == false)
-		{
+		if ($this->userManager->getUserByEmail($values->email) == false) {
 			$this->userManager->register($values);
 			$this->flashMessage("Uživatel byl vytvořen!");
 			$this->redirect("Settings:users");
 		}
-		else
-		{
+		else {
 			$this->flashMessage("Duplicita e-mailové adresy!");
 		}
 
@@ -246,10 +250,13 @@ class SettingsPresenter extends BasePresenter
 		$this->redirect("Settings:users");
 	}
 
+	/**
+	 * Handle, který vytváří nové heslo pro uživatele (ID)
+	 * @param $id - ID uživatele
+	 */
 	public function handleResetPassword($id)
 	{
-		if(!$this->user->isAllowed($this->getPresenterName(), "editAll"))
-		{
+		if (!$this->user->isAllowed($this->getPresenterName(), "editAll")) {
 			$this->flashMessage("Chyba oprávnění!");
 			$this->redirect("Homepage:default");
 		}
@@ -283,6 +290,7 @@ class SettingsPresenter extends BasePresenter
 
 	public function productCreateFormSucceeded($form, $values)
 	{
+		//Přidání produktu
 		$this->productManager->addProduct($values);
 		$this->flashMessage("Produkt byl úspěšně přidán!");
 		$this->redirect("Settings:products");
@@ -318,6 +326,7 @@ class SettingsPresenter extends BasePresenter
 
 	public function productEditFormSucceeded($form, $values)
 	{
+		//Úprava produktu
 		$this->productManager->updateProduct($values);
 		$this->flashMessage("Produkt byl upraven!");
 		$this->redirect("Settings:products");
@@ -354,6 +363,7 @@ class SettingsPresenter extends BasePresenter
 
 	public function automatCreateFormSucceeded($form, $values)
 	{
+		//přidání automatu
 		$this->automatManager->addAutomat($values);
 		$this->flashMessage("Automat byl vytvořen!");
 		$this->redirect("Settings:automats");
@@ -383,6 +393,7 @@ class SettingsPresenter extends BasePresenter
 
 	public function automatEditFormSucceeded($form, $values)
 	{
+		//úprava automatu
 		$this->automatManager->updateAutomat($values);
 		$this->flashMessage("Automat byl vytvořen!");
 		$this->redirect("Settings:automats");
@@ -390,6 +401,39 @@ class SettingsPresenter extends BasePresenter
 
 	public function actionAutomatEdit($id)
 	{
+		//úprava automatu
 		$this->editedAutomat = $this->automatManager->getAutomatById($id);
+		$this->productList = $this->productManager->getForArray();
+	}
+
+	protected function createComponentUpdateStorageForm()
+	{
+		//původní hodnoty
+		$defaults = $this->itemStorageManager->getDefaults($this->editedAutomat->id, $this->productList);
+
+		$form = new Form();
+		$form->getElementPrototype()->addAttributes(array('class' => 'form-horizontal'));
+
+		//vytvoření kontejneru pro práci s položkami
+		$itemsContainer = $form->addContainer('items_container');
+		foreach ($this->productList as $id => $product) {
+			$name = $id;
+			$itemsContainer->addText($name, $product)->setType('number')->setDefaultValue(0);
+			$itemsContainer[$name]->getControlPrototype()->addAttributes(array('data-id' => $id));
+		}
+
+		$form->onSuccess[] = [$this, 'updateStorageFormSucceeded'];
+		$form->addHidden('id')->setValue($this->editedAutomat);
+		$form->addSubmit('submit', "Aktualizovat zásoby");
+		
+		$itemsContainer->setDefaults($defaults);
+
+		return $form;
+	}
+
+	public function updateStorageFormSucceeded($form, $values)
+	{
+		//aktualizace skladových zásob
+		$this->itemStorageManager->updateStorage($values);
 	}
 }

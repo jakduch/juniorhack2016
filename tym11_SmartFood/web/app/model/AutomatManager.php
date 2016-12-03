@@ -15,12 +15,20 @@ class AutomatManager extends BaseManager
 		COLUMN_NAME = "name",
 		COLUMN_LOCALITY = "locality";
 
+	/**
+	 * Získá všechny automaty
+	 * @return array|\Nette\Database\Table\IRow[]
+	 */
 	public function getAll()
 	{
 		return $this->database->table(self::TABLE_NAME)
 			->fetchAll();
 	}
 
+	/**
+	 * Přidá automat
+	 * @param $values
+	 */
 	public function addAutomat($values)
 	{
 		$data[self::COLUMN_NAME] = $values->name;
@@ -30,6 +38,10 @@ class AutomatManager extends BaseManager
 			->insert($data);
 	}
 
+	/**
+	 * Edituje automat
+	 * @param $values
+	 */
 	public function updateAutomat($values)
 	{
 		$data[self::COLUMN_LOCALITY] = $values->locality;
@@ -40,6 +52,11 @@ class AutomatManager extends BaseManager
 			->update($data);
 	}
 
+	/**
+	 * Získá automat dle ID (primary key)
+	 * @param $id
+	 * @return bool|mixed|\Nette\Database\Row|\Nette\Database\Table\IRow
+	 */
 	public function getAutomatById($id)
 	{
 		return $this->database->table(self::TABLE_NAME)
@@ -47,6 +64,10 @@ class AutomatManager extends BaseManager
 			->fetch();
 	}
 
+	/**
+	 * Získá automaty ve formátu pro textbox [id] => text
+	 * @return array
+	 */
 	public function getForArray()
 	{
 		$result = $this->database->table(self::TABLE_NAME)
@@ -56,7 +77,7 @@ class AutomatManager extends BaseManager
 		$return = array();
 		foreach($result as $r)
 		{
-			$return[$r->id] = $r->name;
+			$return[$r->id] = $r->name . " - " . $r->locality;
 		}
 
 		return $return;

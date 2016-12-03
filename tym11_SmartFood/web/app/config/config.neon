@@ -33,6 +33,7 @@ services:
 	automatManager: App\Model\AutomatManager
 	ordersManager: App\Model\OrdersManager
 	orderItemsManager: App\Model\OrdersItemsManager
+	itemStorageManager: App\Model\ItemStorageManager
 
 	leftSideNavigationFactory: App\CoreModule\Controls\ILeftsideNavigationFactory
 

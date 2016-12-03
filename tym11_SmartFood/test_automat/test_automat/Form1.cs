@@ -23,59 +23,54 @@ namespace test_automat
             InitializeComponent();
         }
 
+        private int automat_id;
         private string Port;
+        private System.IO.Ports.SerialPort SP;
+        MySqlConnection pripojeni;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Port = null;
-            string[] ports = SerialPort.GetPortNames();
-            foreach (string port in ports)
+            try
             {
-                try
+                automat_id = Convert.ToInt32(textBox1.Text);
+                Port = null; if (SP != null) SP.Close(); SP = null;
+                string[] ports = SerialPort.GetPortNames();
+                foreach (string port in ports)
                 {
-                    using (System.IO.Ports.SerialPort sp = new System.IO.Ports.SerialPort(port, 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One))
+                    try
                     {
-                        readThread = new Thread(Read);
-                        sp.ReadTimeout = 2000;
-                        sp.Open();
-                        readThread.Start();
-                        sp.ReadLine();
-                        Port = port;
-                        break;
+                        using (System.IO.Ports.SerialPort sp = new System.IO.Ports.SerialPort(port, 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One))
+                        {
+                            readThread = new Thread(Read);
+                            sp.ReadTimeout = 2000;
+                            sp.Open();
+                            readThread.Start();
+                            sp.ReadLine();
+                            Port = port;
+                            break;
+                        }
                     }
+                    catch
+                    { }
                 }
-                catch
-                { }
-            }
-            if (Port != null)
-            {
-                using (System.IO.Ports.SerialPort sp = new System.IO.Ports.SerialPort(Port, 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One))
+                if (Port != null)
                 {
-                    sp.Open();
-                    sp.Encoding = Encoding.ASCII;
-                    sp.WriteLine("test");
+                    SP = new System.IO.Ports.SerialPort(Port, 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
+                    SP.Open();
+                    SP.Encoding = Encoding.ASCII;
+                    SP.WriteLine(("pripojeno       automat: " + automat_id).PadRight(32, ' '));
+                    pripojeni = new MySqlConnection("Database=hackathon;DataSource=192.168.133.193;UserId=david;Password=123");
+                    MessageBox.Show("pripojeno");
+                    SP.WriteLine("Dobry den".PadRight(32, ' '));
 
-                    MessageBox.Show("test");
-                    sp.Close();
                 }
-
-
-
+                else MessageBox.Show("Není připojen automat!");
             }
-            else MessageBox.Show("Není připojen automat!");
-
-
+            catch
+            {
+                MessageBox.Show("problem s pripojenim");
             }
-
-        /*using (var sp = new System.IO.Ports.SerialPort("COM8", 115200, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One))
-        {
-            sp.Open();
-
-            sp.WriteLine("Hello!");
-
-            var readData = sp.ReadLine();
-            MessageBox.Show(readData);
-        }*/
+        }
         private void Read()
         {
             Thread.Sleep(2000);
@@ -83,18 +78,44 @@ namespace test_automat
 
         private void button2_Click(object sender, EventArgs e)
         {
-            byte x = 55;
-            int id;
-
-
-            MySqlConnection pripojeni = new MySqlConnection("Database=hackathon;DataSource=192.168.133.193;UserId=david;Password=123");
-            MySqlCommand mc = new MySqlCommand();
-            mc.CommandText = "";
+            try
+            {
+                byte x = 44;
+                int cena = 0;
 
 
 
+                pripojeni.Open();
+                MySqlCommand mc = new MySqlCommand();
+                mc.Connection = pripojeni;
+                mc.CommandText = "SELECT * FROM orders WHERE order_number = " + x + " AND automat_id = " + automat_id + " AND getted = 0";
+                MySqlDataReader cteni = mc.ExecuteReader();
 
-            //myConnectionString = "server=192.168.133.193;uid=david;" +
+                bool b = cteni.Read();
+
+                if (b)
+                {
+                    do
+                    {
+                        cena = cteni.GetInt32("total_price");
+                    }
+                    while (cteni.Read());
+                    SP.WriteLine((cena + "Kc").PadRight(32, ' '));
+                }
+                else
+                    SP.WriteLine("Nemate nic      objednane.".PadRight(32, ' '));
+
+            }
+            catch
+            {
+                SP.WriteLine("chyba pripojeni");
+                MessageBox.Show("chyba pripojeni");
+            }
+            finally
+            {
+                pripojeni.Close();
+            }
+                //myConnectionString = "server=192.168.133.193;uid=david;" +
             //    "pwd=123;database=hackathon;";
         }
     }

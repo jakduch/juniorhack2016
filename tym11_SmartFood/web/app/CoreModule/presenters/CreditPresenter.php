@@ -12,13 +12,15 @@ use Nette\Application\UI\Form;
 class CreditPresenter extends BasePresenter
 {
 	/** Seznam modelů */
-	protected $managerList = array("user");
+	protected $managerList = array("user", "creditLog");
 
 	/**
 	 * Model pro práci s uživateli
 	 */
 
 	protected $userManager;
+
+	protected $creditLogManager;
 
 	public function actionBuyCredit()
 	{
@@ -50,5 +52,11 @@ class CreditPresenter extends BasePresenter
 		$this->userManager->addCredit($values->id, $values->credit_count);
 		$this->flashMessage("Kredity byli přidány!");
 		$this->redirect("Credit:buyCredit");
+	}
+
+	public function actionCreditHistory()
+	{
+		$this->template->creditHistory = $this->creditLogManager->getLogsOfUser($this->user->id);
+
 	}
 }

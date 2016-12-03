@@ -5567,3 +5567,8 @@ th input {
 {
 	font-size: 24px;
 }
+
+.buy-table th, .buy-table td
+{
+	padding: 5px !important;
+}

@@ -46,4 +46,31 @@ class ProductManager extends BaseManager
 			->where(self::COLUMN_ID, $id)
 			->fetch();
 	}
+
+	public function getForArray()
+	{
+		$result = $this->database->table(self::TABLE_NAME)
+			->order(self::COLUMN_NAME . " ASC")
+			->fetchAll();
+
+		$return = array();
+		foreach($result as $r)
+		{
+			$return[$r->id] = $r->name;
+		}
+		return $return;
+	}
+
+	public function getPrices()
+	{
+		$result = $this->database->table(self::TABLE_NAME)
+			->order(self::COLUMN_ID . " ASC" )
+			->fetchAll();
+		$prices = array();
+		foreach($result as $r)
+		{
+			$prices[$r->id] = $r->price;
+		}
+		return $prices;
+	}
 }

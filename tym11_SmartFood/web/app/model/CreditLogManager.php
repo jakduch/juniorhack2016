@@ -27,4 +27,12 @@ class CreditLogManager extends BaseManager
 		$this->database->table(self::TABLE_NAME)
 			->insert($data);
 	}
+
+	public function getLogsOfUser($id)
+	{
+		return $this->database->table(self::TABLE_NAME)
+			->where(self::COLUMN_USER_ID, $id)
+			->order(self::COLUMN_DATE . " ASC")
+			->fetchAll();
+	}
 }

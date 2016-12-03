@@ -46,4 +46,19 @@ class AutomatManager extends BaseManager
 			->where(self::COLUMN_ID, $id)
 			->fetch();
 	}
+
+	public function getForArray()
+	{
+		$result = $this->database->table(self::TABLE_NAME)
+			->order(self::COLUMN_NAME . " ASC")
+			->fetchAll();
+
+		$return = array();
+		foreach($result as $r)
+		{
+			$return[$r->id] = $r->name;
+		}
+
+		return $return;
+	}
 }

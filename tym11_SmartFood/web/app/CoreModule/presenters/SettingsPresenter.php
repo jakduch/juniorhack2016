@@ -374,7 +374,7 @@ class SettingsPresenter extends BasePresenter
 
 		$form->onSuccess[] = [$this, 'automatEditFormSucceeded'];
 		$form->addHidden('id');
-		$form->addSubmit('submit', "Vytvořit automat");
+		$form->addSubmit('submit', "Upravit automat");
 
 		$form->setDefaults($this->editedAutomat);
 

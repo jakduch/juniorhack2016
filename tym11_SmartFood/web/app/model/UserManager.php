@@ -331,6 +331,14 @@ class UserManager extends BaseManager
 		$this->creditLogManager->logSomething("Kredity přidány (+$credit)", $newValue, $id);
 	}
 
+	public function removeCredit($id, $credit)
+	{
+		$lastValue = $this->getCreditByUserId($id);
+		$newValue = $lastValue - $credit;
+		$this->setCreditByUserId($id, $newValue);
+		$this->creditLogManager->logSomething("Kredity odečteny (-$credit)", $newValue, $id);
+	}
+
 }
 
 

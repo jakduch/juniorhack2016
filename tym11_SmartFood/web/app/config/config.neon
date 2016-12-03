@@ -31,6 +31,8 @@ services:
 	creditLogManager: App\Model\CreditLogManager
 	productManager: App\Model\ProductManager
 	automatManager: App\Model\AutomatManager
+	ordersManager: App\Model\OrdersManager
+	orderItemsManager: App\Model\OrdersItemsManager
 
 	leftSideNavigationFactory: App\CoreModule\Controls\ILeftsideNavigationFactory
 

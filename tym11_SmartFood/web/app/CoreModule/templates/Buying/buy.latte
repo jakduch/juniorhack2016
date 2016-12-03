@@ -1,0 +1,110 @@
+{block content}
+
+<div class="x_panel">
+	<div class="x_title">
+		<h2>Vytvoření nákupu</h2>
+		<ul class="nav navbar-right panel_toolbox">
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+
+	{form buyForm}
+		<div class="form-group">
+			{label automat /}
+			<div class="col-sm-4">
+				{input automat}
+			</div>
+		</div>
+
+		<hr />
+
+		<h2>Zadejte počet kusů</h2>
+		<table border="1px solid" class="buy-table">
+			<tr>
+				<th>Název</th>
+				<th>Cena za kus</th>
+				<th>Počet</th>
+				<th>Součet</th>
+			</tr>
+		<div n:formContainer="items_container" n:inner-foreach="$formContainer->controls AS $name => $field">
+			<tr>
+				<td>{label $name /}</td>
+				<td><span id="{$name}-price_ks">{$prices[$name]}</span> Kč</td>
+				<td>{input $name}</td>
+				<td><span class="priceForItem" id="{$name}-price_item">0</span> Kč</td>
+			</tr>
+		</div>
+			<tr>
+				<th>Celkem</th>
+				<th>-</th>
+				<th><span id="total-ks">0</span> ks</th>
+				<th><span id="total-price">0</span> Kč</th>
+			</tr>
+		</table>
+
+		<div class="form-group">
+			<div class="col-sm-10">
+				{input submit}
+			</div>
+		</div>
+	{/form}
+
+</div>
+
+
+
+	{/block}
+	{block scripts}
+		{include parent}
+		<script>
+			function prepocitej()
+			{
+				$("input[type=number]").each(function() {
+					var id = $(this).attr('data-id');
+					var price_ks = ($("#" + id + "-price_ks").text())
+					var ks = $(this).val();
+					$("#" + id + "-price_item").text(ks * price_ks);
+
+					var count = 0;
+					$(".buy-table input[type=number]").each(function(){
+						count += Number($(this).val());
+					});
+					$("#total-ks").text(count);
+
+					var priceTotal = 0;
+					$(".priceForItem").each(function(){
+						console.log(this);
+						priceTotal += Number($(this).text());
+					});
+					$("#total-price").text(priceTotal);
+				});
+
+			}
+		</script>
+		<script>
+			$("input[type=number]").change(function(e){
+				var id = $(this).attr('data-id');
+				var price_ks = ($("#" + id + "-price_ks").text())
+				var ks = $(this).val();
+				$("#" + id + "-price_item").text(ks * price_ks);
+
+				var count = 0;
+				$(".buy-table input[type=number]").each(function(){
+					count += Number($(this).val());
+				});
+				$("#total-ks").text(count);
+
+				var priceTotal = 0;
+				$(".priceForItem").each(function(){
+					console.log(this);
+					priceTotal += Number($(this).text());
+				});
+				$("#total-price").text(priceTotal);
+			});
+
+			prepocitej();
+		</script>
+	{/block}
+
+	{block head}
+	{/block}

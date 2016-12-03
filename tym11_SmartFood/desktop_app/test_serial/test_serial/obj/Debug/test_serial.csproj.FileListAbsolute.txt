@@ -1,0 +1,9 @@
+D:\brno\test_serial\test_serial\bin\Debug\test_serial.exe.config
+D:\brno\test_serial\test_serial\bin\Debug\test_serial.exe
+D:\brno\test_serial\test_serial\bin\Debug\test_serial.pdb
+D:\brno\test_serial\test_serial\obj\Debug\test_serial.csprojResolveAssemblyReference.cache
+D:\brno\test_serial\test_serial\obj\Debug\test_serial.Form1.resources
+D:\brno\test_serial\test_serial\obj\Debug\test_serial.Properties.Resources.resources
+D:\brno\test_serial\test_serial\obj\Debug\test_serial.csproj.GenerateResource.Cache
+D:\brno\test_serial\test_serial\obj\Debug\test_serial.exe
+D:\brno\test_serial\test_serial\obj\Debug\test_serial.pdb

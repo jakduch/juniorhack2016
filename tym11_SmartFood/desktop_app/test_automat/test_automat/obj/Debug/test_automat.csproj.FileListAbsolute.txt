@@ -1,0 +1,11 @@
+D:\brno\test_automat\test_automat\bin\Debug\test_automat.exe.config
+D:\brno\test_automat\test_automat\bin\Debug\test_automat.exe
+D:\brno\test_automat\test_automat\bin\Debug\test_automat.pdb
+D:\brno\test_automat\test_automat\obj\Debug\test_automat.csprojResolveAssemblyReference.cache
+D:\brno\test_automat\test_automat\obj\Debug\test_automat.Form1.resources
+D:\brno\test_automat\test_automat\obj\Debug\test_automat.Properties.Resources.resources
+D:\brno\test_automat\test_automat\obj\Debug\test_automat.csproj.GenerateResource.Cache
+D:\brno\test_automat\test_automat\obj\Debug\test_automat.exe
+D:\brno\test_automat\test_automat\obj\Debug\test_automat.pdb
+D:\brno\test_automat\test_automat\bin\Debug\MySql.Data.dll
+D:\brno\test_automat\test_automat\bin\Debug\MySql.Data.xml
